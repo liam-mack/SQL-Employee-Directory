@@ -140,6 +140,7 @@ addRole = () => {
             if (err) throw err
             console.log(res);
             console.log(`${input.title} role successfully added.`)
+            init();
         })
     })
 }
