@@ -2,10 +2,13 @@ const mysql = require("mysql");
 const inquirer = require("inquirer");
 require('dotenv').config();
 
+
+// Deconstruct specific question sets 
 const {home, newEmployee, newRole, newDepartment} = require("./prompts")
 
-let connection;
 
+// Set connection, first checks if build is on Heroku JAWSDB before local
+let connection;
 if (process.env.JAWSDB_URL) {
     connection = mysql.createConnection(process.env.JAWSDB_URL);
 } else {
@@ -17,14 +20,12 @@ if (process.env.JAWSDB_URL) {
         database: "employee_trackerDB"
     })
 }
-
-
 connection.connect((err) => {
     if (err) throw err;
-
     init();
 })
 
+// Initializes inquirer prompts, passes through variables deconstructed earlier
 init = () => {
     inquirer.
     prompt(home)
@@ -67,6 +68,7 @@ init = () => {
     });
 }
 
+// Query SQL for all departments
 viewDepartments = () => {
     let query = "SELECT * FROM department"
     connection.query(query, (err, res) => {
@@ -76,6 +78,7 @@ viewDepartments = () => {
     });
 }
 
+// Join relevant employee inofrmation before rendering response as table in console
 viewEmployees = () => {
     console.log("commence");
     let query = "SELECT employee.id, first_name, last_name, role.title, role.salary, department.name, manager_id from employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON department.id = role.department_id;";
@@ -86,6 +89,7 @@ viewEmployees = () => {
     });
 }
 
+// Query SQL for all roles
 viewRoles = () => {
     let query = "SELECT * FROM role"
     connection.query(query, (err, res) => {
@@ -95,6 +99,7 @@ viewRoles = () => {
     });
 }
 
+// Insert into SQL database new department
 addDepartment = () => {
     inquirer.prompt(newDepartment).then(
         (input) => {
@@ -110,6 +115,7 @@ addDepartment = () => {
     );
 }
 
+// Insert into SQL database new employee
 addEmployee = () => {
     inquirer.prompt(newEmployee).then((input) => {
         connection.query("INSERT INTO employee SET ?",
@@ -128,6 +134,7 @@ addEmployee = () => {
     })
 }
 
+// Insert into SQL database new role
 addRole = () => {
     inquirer.prompt(newRole).then((input) => {
         connection.query("INSERT INTO role SET ?",
@@ -145,6 +152,7 @@ addRole = () => {
     })
 }
 
+// Update SQL db using inputted role ID#
 updateRole = () => {
     connection.query("SELECT * FROM employee", (err, res) => {
         // console.log(res)
