@@ -1,4 +1,4 @@
-# Express Note Taker
+# SQl Employee Directory
 [![License](https://img.shields.io/badge/License-Unlicense-blue.svg)](https://opensource.org/licenses/Unlicense)
 
 ## Table of Contents
@@ -13,16 +13,16 @@
 > - [Questions](#Questions)
 
 ## Description
->Node Express Note Taking App with JSON db
+>SQL Employee Database CLI Application
 
 ## Keywords
->*NodeJS, Express, Heroku, CRUD*
+>*NodeJS, Express, SQL, CRUD*
 
 ## Contributors
 >Liam Mackinnon
 
 ## Usage 
->node server.js, Heroku deployment
+>node server.js
 
 ## Installation
 >*npm i*
